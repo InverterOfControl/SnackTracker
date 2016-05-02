@@ -11,7 +11,7 @@ namespace SnackTracker.Configuration
             var sessionFactory = Fluently.Configure()
                 .Database(SQLiteConfiguration.Standard.UsingFile("snacks.db"))
                 .Mappings(m => m.FluentMappings.AddFromAssemblyOf<App>())
-                .ExposeConfiguration(SchemaBuilder.BuildSchema)
+                //.ExposeConfiguration(SchemaBuilder.BuildSchema)
                 .BuildSessionFactory();
 
             return sessionFactory;
