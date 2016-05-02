@@ -11,14 +11,13 @@ using System.Threading.Tasks;
 namespace SnackTracker.DB
 {
     public static class Persister {
-        public static void SaveSnack(SnackViewModel snackViewModel) {
+        public static void SaveSnack(Snack snackModel) {
             var sessionFactory = SessionFactoryFactory.GetFactory();
             
             using (var session = sessionFactory.OpenSession())
             {
                 using (var trans = session.BeginTransaction())
                 {
-                    var snackModel = SnackMap.VmToModel(snackViewModel);
                     session.SaveOrUpdate(snackModel);
                     trans.Commit();
                 }
@@ -26,18 +25,43 @@ namespace SnackTracker.DB
         }
 
 
-        public static IEnumerable<SnackViewModel> GetSnacks()
+        public static IEnumerable<Snack> GetSnacks()
         {
-
             var sessionFactory = SessionFactoryFactory.GetFactory();
             
             using (var session = sessionFactory.OpenSession())
             {
                 using (var trans = session.BeginTransaction())
                 {
-                    var snackVMs = session.CreateCriteria<Snack>().List<Snack>();
+                    return session.CreateCriteria<Snack>().List<Snack>();
+                }
+            }
+        }
 
-                    return snackVMs.Select(SnackMap.ModelToVm);
+        internal static void RemoveSnack(Snack snack)
+        {
+            var sessionFactory = SessionFactoryFactory.GetFactory();
+
+            using (var session = sessionFactory.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    session.Delete(snack);
+                    trans.Commit();
+                }
+            }
+        }
+
+        internal static void ClearSnacks()
+        {
+            var sessionFactory = SessionFactoryFactory.GetFactory();
+
+            using (var session = sessionFactory.OpenSession())
+            {
+                using (var trans = session.BeginTransaction())
+                {
+                    session.Delete("SELECT * FROM Snacks");
+                    trans.Commit();
                 }
             }
         }

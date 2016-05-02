@@ -15,12 +15,12 @@ namespace SnackTracker.Mappings
             Map(x => x.Quantity);
         }
 
-        public static Snack VmToModel(SnackViewModel vm){
-            return new Snack{ Date = vm.Date, Name = vm.Name, PricePerUnit = vm.PricePerUnit, Quantity = vm.Quantity };
-        }
+        //public static Snack VmToModel(SnackViewModel vm){
+        //    return new Snack{ Date = vm.Date, Name = vm.Name, PricePerUnit = vm.PricePerUnit, Quantity = vm.Quantity };
+        //}
 
-        public static SnackViewModel ModelToVm(Snack m){
-            return new SnackViewModel { Quantity = m.Quantity, PricePerUnit = m.PricePerUnit, Name = m.Name, Date = m.Date };
-        }
+        //public static SnackViewModel ModelToVm(Snack m){
+        //    return new SnackViewModel { Quantity = m.Quantity, PricePerUnit = m.PricePerUnit, Name = m.Name, Date = m.Date };
+        //}
     }
 }

@@ -1,10 +1,18 @@
-﻿<Controls:MetroWindow x:Class="SnackTracker.MainWindow"
+﻿<Controls:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" xmlns:Views="clr-namespace:SnackTracker.Views" x:Class="SnackTracker.MainWindow"                    
         Title="SnackTracker" Height="350" Width="525"
         ShowMaxRestoreButton="False"
                       ShowIconOnTitleBar="True"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Grid Width="{TemplateBinding Width}"
@@ -21,17 +29,7 @@
             </Grid>
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Icons.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.New" Executed="AddSnackCommand_Executed" CanExecute="AddSnackCommand_CanExecute" />
-    </Window.CommandBindings>
-        <Grid>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*"/>
@@ -40,61 +38,8 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">
-            Snacks
-        </Label>
-        <Label Grid.Column="0" Grid.Row="1"></Label>
-        <Grid
-            Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <DataGrid Grid.Row="0" Grid.ColumnSpan="4" ItemsSource="{Binding Snacks}" AlternatingRowBackground="Gainsboro" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Datum">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Date, StringFormat='dd.MM.yyyy'}"></TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" Width="1*" Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="Anzahl" Binding="{Binding Quantity}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Einzepreis" Binding="{Binding PricePerUnit}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Summe" Binding="{Binding Sum}"></DataGridTextColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <TextBlock x:Name="OverAllSumTextBlock" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Right" Text="{Binding OverallSum, StringFormat='#,##0.00 €;(#,##0.00) €'}"></TextBlock>
-            <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
-                Was für ein Snack?
-            </Label>
-            <TextBox Grid.Row="2" x:Name="snackNameInput" Grid.Column="0" Margin="15 0 15 5" VerticalAlignment="Bottom">
-            </TextBox>
-            <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center">
-                Wieviele Snacks?
-            </Label>
-            <TextBox x:Name="snackQuantityInput" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="40 0 40 5"></TextBox>
-            <Label Grid.Row="21" Grid.Column="2" VerticalAlignment="top" HorizontalAlignment="Center">
-                Preis pro Snack?
-            </Label>
-            <TextBox Grid.Row="2" x:Name="snackPriceInput" Grid.Column="2" VerticalAlignment="Bottom" Margin="40 0 40 5" Text="{Binding Value, StringFormat='$#,##0.0000;$(#,##0.0000)'}"></TextBox>
-            <Button Command="ApplicationCommands.New" Grid.Row="2" Grid.Column="4" Style="{DynamicResource MetroCircleButtonStyle}" Width="60" Height="60">
-                <Rectangle Width="20"
-                Height="20"
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_add}" />
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-        </Grid>
+        <Label Grid.Row="0" Grid.Column="0" Content="Snacks"/>
+        <Label Grid.Column="0" Grid.Row="1"/>
+        <Views:SnackListView x:Name="snackListView" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </Controls:MetroWindow>

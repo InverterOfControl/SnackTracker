@@ -16,7 +16,7 @@ namespace SnackTracker.Configuration
 
         public static void BuildSchema(NHibernate.Cfg.Configuration config)
         {
-            // delete the existing db on each run
+             //delete the existing db on each run
             if (File.Exists("snack.db"))
             {
                 File.Delete("snack.db");

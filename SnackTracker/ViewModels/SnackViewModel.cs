@@ -1,30 +1,33 @@
-﻿using System;
+﻿using SnackTracker.Models;
+using System;
 using System.ComponentModel;
+using ViewModelBase;
 
 namespace SnackTracker.ViewModels
 {
-    public class SnackViewModel : INotifyPropertyChanged {
+    public class SnackViewModel : ViewModel<Snack> {
+
         private String name;
         public String Name { get{return this.name;}
             set{
                 this.name = value;
-                NotifyPropertyChanged("Name");
+                this.OnPropertyChanged("Name");
             } }
 
         private double pricePerUnit;
         public double PricePerUnit { get { return this.pricePerUnit; }
             set {
                 this.pricePerUnit = value;
-                NotifyPropertyChanged("PricePerUnit");
-                NotifyPropertyChanged("Sum");
+                this.OnPropertyChanged("PricePerUnit");
+                this.OnPropertyChanged("Sum");
             }
         }
         private int quantity;
         public int Quantity { get { return this.quantity; }
             set {
                 this.quantity = value;
-                NotifyPropertyChanged("Quantity");
-                NotifyPropertyChanged("Sum");
+                this.OnPropertyChanged("Quantity");
+                this.OnPropertyChanged("Sum");
             }
         }
 
@@ -34,22 +37,16 @@ namespace SnackTracker.ViewModels
         public DateTime Date { get { return this.date; }
             set {
                 this.date = value;
-                NotifyPropertyChanged("Date");
+                this.OnPropertyChanged("Date");
             }
         }
 
-        public SnackViewModel(){
+        public SnackViewModel(Snack model) : base(model){
             this.Date = DateTime.Now;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(String info)
+        public SnackViewModel(): base()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(info));
-            }
         }
     }
 }
